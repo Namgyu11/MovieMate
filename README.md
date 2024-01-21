@@ -11,7 +11,7 @@
 ![amazons3](https://img.shields.io/badge/amazons3-569A31?&style=for-the-badge&logo=amazons3&logoColor=white)
 
 ## ERD
-
+![erd](https://github.com/Namgyu11/MovieMate/assets/103015031/1f1bb8f4-6fbf-45e8-abe3-733484f4073a)
 ## 프로그램 기능 및 설계
 ### 회원관리
 - 회원가입 기능
