@@ -21,6 +21,7 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
+  @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
         .csrf(AbstractHttpConfigurer::disable)
@@ -29,8 +30,8 @@ public class SecurityConfig {
         .sessionManagement((sessionManagement) ->
             sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
-        .authorizeHttpRequests((authorizeRequests) -> authorizeRequests.anyRequest()
-            .permitAll()
+        .authorizeHttpRequests((authorizeRequests) ->
+            authorizeRequests.anyRequest().permitAll()
         );
 
     return httpSecurity.build();
