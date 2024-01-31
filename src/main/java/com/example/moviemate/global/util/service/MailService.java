@@ -80,6 +80,8 @@ public class MailService {
         .orElseThrow(() -> new GlobalException(USER_NOT_FOUND));
     user.changeEmailAuth();
     userRepository.save(user);
+
+    redisService.deleteData(email);
   }
   private boolean isVerify(String email, String code){
     String data = redisService.getData(EMAIL_PREFIX + email);
