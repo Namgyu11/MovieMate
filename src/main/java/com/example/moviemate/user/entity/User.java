@@ -2,6 +2,7 @@ package com.example.moviemate.user.entity;
 
 import com.example.moviemate.bookmark.entity.Bookmark;
 import com.example.moviemate.global.entity.BaseEntity;
+import com.example.moviemate.post.entity.Post;
 import com.example.moviemate.user.entity.type.UserType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,11 +35,11 @@ public class User extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private String password;
-
   @Column(nullable = false, unique = true)
   private String email;
+
+  @Column(nullable = false)
+  private String password;
 
   @Column(nullable = false)
   private String nickname;
@@ -55,8 +56,14 @@ public class User extends BaseEntity {
 
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Post> posts = new ArrayList<>();
+  @Builder.Default
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Bookmark> bookmarks = new ArrayList<>();
 
+  public void changeEmailAuth() {
+    this.emailAuth = true;
+  }
 
 
 }
