@@ -1,0 +1,37 @@
+### 회원가입
+POST http://localhost:8080/api/auth/signUp
+Content-Type: application/json
+
+{
+  "email": "test1234@gmail.com",
+  "password": "12345",
+  "nickname": "abcd",
+  "phoneNumber": "010-1234-5678"
+}
+
+### 로그인
+POST http://localhost:8080/api/auth/signIn
+Content-Type: application/json
+
+{
+  "email": "test1234@gmail.com",
+  "password": "12345"
+}
+
+### 이메일 인증
+POST http://localhost:8080/api/auth/mail/certification
+Content-Type: application/json
+
+{
+  "email": "test1234@gmail.com"
+}
+
+### 이메일 검증
+
+POST http://localhost:8080/api/auth/mail/verify
+Content-Type: application/json
+
+{
+  "email": "test1234@gmail.com",
+  "code": "617264"
+}
