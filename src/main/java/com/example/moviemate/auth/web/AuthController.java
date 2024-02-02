@@ -35,7 +35,7 @@ public class AuthController {
   @PostMapping("/mail/certification")
   public ResponseEntity<?> sendCertificationMail(@RequestBody SendMailRequest request){
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(mailService.sendAuthMail(request.getEmail()));
+        .body(mailService.generateAndDispatchAuthCode(request.getEmail()));
   }
   @PostMapping("/mail/verify")
   public ResponseEntity<?> sendVerifyMail(@RequestBody VerifyMailRequest request){

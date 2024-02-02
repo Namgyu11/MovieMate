@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @Setter
@@ -39,10 +38,10 @@ public class SignUpDto {
         .build();
   }
 
-  public static User signUpForm(SignUpDto request, PasswordEncoder passwordEncoder){
+  public static User signUpForm(SignUpDto request, String encodedPasswordEncoder){
     return User.builder()
         .email(request.getEmail())
-        .password(passwordEncoder.encode(request.getPassword()))
+        .password(encodedPasswordEncoder)
         .nickname(request.getNickname())
         .phoneNumber(request.getPhoneNumber())
         .userType(UserType.USER)

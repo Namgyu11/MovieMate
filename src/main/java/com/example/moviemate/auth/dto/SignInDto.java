@@ -19,5 +19,4 @@ public class SignInDto {
   private String password;
 
 
-
 }

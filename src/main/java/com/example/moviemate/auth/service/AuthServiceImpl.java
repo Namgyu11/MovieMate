@@ -27,7 +27,8 @@ public class AuthServiceImpl implements AuthService {
       throw new GlobalException(DUPLICATE_USER);
     }
 
-    User savedUser = userRepository.save(SignUpDto.signUpForm(request,passwordEncoder));
+    String encodedPasswordEncoder = passwordEncoder.encode(request.getPassword());
+    User savedUser = userRepository.save(SignUpDto.signUpForm(request, encodedPasswordEncoder));
 
     return SignUpDto.fromEntity(savedUser);
   }
