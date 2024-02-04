@@ -22,3 +22,10 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+  jwt:
+    header: Authorization
+    prefix: "Bearer "
+    secret: bW92aWVNYXRlLXNwcmluZy1ib290LXByb2plY3Qtand0LXNlY3JldC1rZXkK
+    access-token-expire-time: 1800000 # 30분 밀리초
+    refresh-token-expire-time: 432000000 # 5일 밀리초
