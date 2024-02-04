@@ -1,13 +1,8 @@
 package com.example.moviemate.global.util.jwt;
 
-
-import static com.example.moviemate.global.exception.type.ErrorCode.EXPIRED_TOKEN;
-import static com.example.moviemate.global.exception.type.ErrorCode.INVALID_TOKEN;
-import static com.example.moviemate.global.exception.type.ErrorCode.UNSUPPORTED_TOKEN;
-import static com.example.moviemate.global.exception.type.ErrorCode.WRONG_TYPE_TOKEN;
+import static com.example.moviemate.global.exception.type.ErrorCode.*;
 
 import com.example.moviemate.global.exception.GlobalException;
-import com.example.moviemate.global.exception.type.ErrorCode;
 import com.example.moviemate.global.util.jwt.dto.TokenDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,11 +19,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
 
+/**
+ * JWT 토큰을 생성하고 검증
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -48,6 +45,14 @@ public class TokenProvider {
   
   private final JwtUserDetailService userDetailService;
 
+
+  /**
+   * 주어진 이메일과 유저 타입(권한)에 대해 액세스 토큰과 리프레시 토큰을 생성.
+   *
+   * @param email 사용자의 이메일 주소
+   * @param userType 사용자의 유형
+   * @return 생성된 액세스 토큰과 리프레시 토큰 정보가 담긴 TokenDto 객체
+   */
   public TokenDto generateToken(String email, String userType) {
     Date now = new Date();
 
@@ -72,9 +77,20 @@ public class TokenProvider {
         .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 사용할 암호화 알고리즘, 비밀키
         .compact();
 
-    return TokenDto.builder().build();
+    return TokenDto.builder()
+        .accessToken(accessToken)
+        .refreshToken(refreshToken)
+        .accessTokenExpireTime(accessTokenExpireTime.getTime())
+        .refreshTokenExpireTime(refreshTokenExpireTime.getTime())
+        .build();
   }
 
+  /**
+   * 주어진 토큰이 유효한지 검증. 토큰이 유효하지 않은 경우, 예외를 발생.
+   *
+   * @param token 검증할 JWT 토큰
+   * @return 토큰의 유효성 검증 결과 (유효할 경우 true, 그렇지 않을 경우 false)
+   */
   public boolean validateToken(String token){
     try{
       Claims claims = this.parseClaims(token);
@@ -94,6 +110,13 @@ public class TokenProvider {
     }
   }
 
+
+  /**
+   * 주어진 토큰에 대한 인증 정보를 반환.
+   *
+   * @param token 인증 정보를 추출할 JWT 토큰
+   * @return 토큰에 담긴 인증 정보 (Authentication 객체)
+   */
   public Authentication getAuthentication(String token){
     Claims claims = this.parseClaims(token);
     String userId = claims.get(USER_ID).toString();
@@ -106,8 +129,7 @@ public class TokenProvider {
 
   /**
    * 토큰으로부터 Claim 정보를 가져옴.
-   * @param token
-   * @return
+   *
    */
   private Claims parseClaims(String token){
     return Jwts.parserBuilder()
@@ -117,6 +139,10 @@ public class TokenProvider {
         .getBody();
   }
 
+
+  /**
+   * Base64 인코딩된 비밀키를 반환.
+   */
   private Key getSigningKey(){
     String encoded = Base64.getEncoder().encodeToString(
         secretKey.getBytes(StandardCharsets.UTF_8));
