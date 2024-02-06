@@ -5,6 +5,9 @@ import static com.example.moviemate.global.exception.type.ErrorCode.*;
 import com.example.moviemate.auth.dto.SignInDto;
 import com.example.moviemate.auth.dto.SignUpDto;
 import com.example.moviemate.global.exception.GlobalException;
+import com.example.moviemate.global.service.RedisService;
+import com.example.moviemate.global.util.jwt.TokenProvider;
+import com.example.moviemate.global.util.jwt.dto.TokenDto;
 import com.example.moviemate.user.entity.User;
 import com.example.moviemate.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ public class AuthServiceImpl implements AuthService {
   private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
 
+  private final TokenProvider tokenProvider;
+
   @Override
   public SignUpDto signUp(SignUpDto request) {
     if (userRepository.existsByEmail(request.getEmail())) {
@@ -34,12 +39,17 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public void signIn(SignInDto request) {
+  public TokenDto signIn(SignInDto request) {
     User user = userRepository.findByEmail(request.getEmail())
         .orElseThrow(() -> new GlobalException(USER_NOT_FOUND));
 
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
       throw new GlobalException(PASSWORD_NOT_MATCH);
     }
+
+    if(!user.isEmailAuth()){
+      throw new GlobalException(EMAIL_NOT_VERITY);
+    }
+    return tokenProvider.generateToken(user.getEmail(), user.getUserType().getCode());
   }
 }

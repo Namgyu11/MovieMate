@@ -1,4 +1,4 @@
-package com.example.moviemate.global.util.dto;
+package com.example.moviemate.global.util.mail.dto;
 
 import lombok.*;
 

@@ -1,10 +1,10 @@
-package com.example.moviemate.global.util.service;
+package com.example.moviemate.global.util.mail.service;
 
 import static com.example.moviemate.global.exception.type.ErrorCode.*;
 
 import com.example.moviemate.global.exception.GlobalException;
 import com.example.moviemate.global.service.RedisService;
-import com.example.moviemate.global.util.dto.SendMailResponse;
+import com.example.moviemate.global.util.mail.dto.SendMailResponse;
 import com.example.moviemate.user.entity.User;
 import com.example.moviemate.user.repository.UserRepository;
 import jakarta.mail.MessagingException;
