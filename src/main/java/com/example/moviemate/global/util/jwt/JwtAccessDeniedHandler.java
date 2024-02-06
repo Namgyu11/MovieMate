@@ -1,5 +1,7 @@
 package com.example.moviemate.global.util.jwt;
 
+import static com.example.moviemate.global.exception.type.ErrorCode.USER_AUTHORITY_NOT_MATCH;
+
 import com.example.moviemate.global.exception.type.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,14 +49,14 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     Map<String, Object> map = new HashMap<>();
 
     // 오류 코드와 메시지를 응답에 포함
-    map.put("errorCode", ErrorCode.USER_AUTHORITY_NOT_MATCH);
-    map.put("errorMessage", ErrorCode.USER_AUTHORITY_NOT_MATCH.getDescription());
+    map.put("errorCode", USER_AUTHORITY_NOT_MATCH);
+    map.put("errorMessage", USER_AUTHORITY_NOT_MATCH.getDescription());
 
     // 응답의 컨텐츠 타입과 상태 코드를 설정
     response.setContentType("application/json;charset=UTF-8");
-    response.setStatus(ErrorCode.USER_AUTHORITY_NOT_MATCH.getHttpStatus().value());
+    response.setStatus(USER_AUTHORITY_NOT_MATCH.getHttpStatus().value());
 
-    log.error("jwt token error -> {}", ErrorCode.USER_AUTHORITY_NOT_MATCH);
+    log.error("jwt token error -> {}", USER_AUTHORITY_NOT_MATCH);
 
     // 응답을 JSON 형태로 변환하여 클라이언트에 전송
     response.getWriter().println(objectMapper.writeValueAsString(map));

@@ -1,5 +1,6 @@
 package com.example.moviemate.global.util.jwt;
 
+import com.example.moviemate.global.exception.ErrorResponse;
 import com.example.moviemate.global.exception.type.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,25 +34,27 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
   public void commence(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException authException) throws IOException {
 
-   Object exception = request.getAttribute("exception");
+    Object exception = request.getAttribute("exception");
 
     // 인증 오류가 ErrorCode 형태인 경우에만 에러 응답을 생성
-    if(exception instanceof ErrorCode errorCode){
-     setResponse(response, errorCode);
-   }
+    if (exception instanceof ErrorCode errorCode) {
+      setResponse(response, errorCode);
+    }
   }
 
 
   /**
-   * 인증 오류에 대한 응답을 생성하고, 이를 클라이언트에 전송하는 메소드
-   * 한글 출력을 위해 getWriter() 사용
+   * 인증 오류에 대한 응답을 생성하고, 이를 클라이언트에 전송하는 메소드 한글 출력을 위해 getWriter() 사용
    */
   private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
     Map<String, Object> map = new HashMap<>();
 
+    ErrorResponse errorResponse = new ErrorResponse(errorCode,
+        errorCode.getHttpStatus(), errorCode.getDescription());
+
     // 오류 코드와 메시지를 응답에 포함
-    map.put("errorCode", errorCode);
-    map.put("errorMessage", errorCode.getDescription());
+    map.put("errorCode", errorResponse.getErrorCode().name());
+    map.put("errorMessage", errorResponse.getErrorCode().getDescription());
 
     // 응답의 컨텐츠 타입과 상태 코드를 설정
     response.setContentType("application/json;charset=UTF-8");
