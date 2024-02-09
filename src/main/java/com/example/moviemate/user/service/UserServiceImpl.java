@@ -22,6 +22,12 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
+  /**
+   * 사용자 정보를 조회하는 메서드
+   *
+   * @param username 사용자의 이메일
+   * @return 사용자의 정보가 담긴 UserDto 객체
+   */
 
   @Override
   @Transactional
@@ -32,6 +38,13 @@ public class UserServiceImpl implements UserService {
 
   }
 
+  /**
+   * 사용자 정보 수정
+   *
+   * @param updateUserDto 업데이트할 사용자 정보가 담긴 객체
+   * @param username 업데이트할 사용자의 이메일
+   * @return 업데이트된 사용자 정보가 담긴 UpdateUserResponse 객체
+   */
   @Override
   @Transactional
   public UpdateUserResponse updateUserInfo(UpdateUserDto updateUserDto, String username) {
