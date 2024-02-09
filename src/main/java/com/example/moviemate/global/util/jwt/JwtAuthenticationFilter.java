@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Value("${spring.jwt.header}")
   private String tokenHeader;
 
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
@@ -40,12 +41,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String token = resolveTokenFromRequest(request);
 
     try {
-      if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
 
+      if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
+        // redis 에서 토큰에 대한 데이터가 없는 경우 (로그아웃 상태 아님)
         if (Objects.isNull(redisService.getData(token))) {
+          // 토큰으로부터 인증 정보를 받아옴
           Authentication authentication = tokenProvider.getAuthentication(token);
+          log.info("getAuthentication method called with token: {}", token);
+
+          // SecurityContext 에 인증 정보를 저장
           SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
+          log.info("Authentication object stored in SecurityContext: {}", authentication);
+
+        } else { // redis 에서 토큰에 대한 데이터가 있는 경우 (로그아웃 상태)
           request.setAttribute("exception", UNKNOWN_ERROR);
         }
       }
@@ -55,6 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     filterChain.doFilter(request, response);
   }
+
 
   private String resolveTokenFromRequest(HttpServletRequest request) {
     String token = request.getHeader(this.tokenHeader);

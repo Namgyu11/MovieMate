@@ -2,11 +2,9 @@ package com.example.moviemate.global.util.jwt;
 
 import com.example.moviemate.global.util.jwt.dto.CustomUserDto;
 import java.util.Collection;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -14,36 +12,37 @@ public record JwtUserDetails(CustomUserDto customUserDto) implements UserDetails
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return List.of(new SimpleGrantedAuthority(customUserDto.getUserType()));
   }
 
   @Override
   public String getPassword() {
-    return null;
+    return customUserDto.getPassword();
   }
 
   @Override
   public String getUsername() {
-    return null;
+
+    return customUserDto.getEmail();
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
 }
