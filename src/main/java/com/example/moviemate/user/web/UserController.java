@@ -27,7 +27,6 @@ public class UserController {
     return ResponseEntity.ok(userService.userInfoInquiry(username));
   }
 
-
   @PutMapping
   public ResponseEntity<?> userInfoUpdate(@Valid @RequestBody UpdateUserDto updateUserDto,
       @LoginUser String username) {
