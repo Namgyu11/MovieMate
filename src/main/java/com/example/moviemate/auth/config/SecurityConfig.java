@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -40,9 +41,12 @@ public class SecurityConfig {
         )
         .authorizeHttpRequests(
             auth -> auth
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/user/").hasRole("USER")
+                .requestMatchers("/api/admin/").hasRole("ADMIN")
                 .anyRequest().permitAll()
 
-        ).exceptionHandling(configurer ->{
+        ).exceptionHandling(configurer -> {
           configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint);
           configurer.accessDeniedHandler(jwtAccessDeniedHandler);
         })

@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -42,14 +43,14 @@ public class TokenProvider {
 
   private static final String KEY_ROLES = "roles";
   private static final String USER_ID = "userId";
-  
+
   private final JwtUserDetailService userDetailService;
 
 
   /**
    * 주어진 이메일과 유저 타입(권한)에 대해 액세스 토큰과 리프레시 토큰을 생성.
    *
-   * @param email 사용자의 이메일 주소
+   * @param email    사용자의 이메일 주소
    * @param userType 사용자의 유형
    * @return 생성된 액세스 토큰과 리프레시 토큰 정보가 담긴 TokenDto 객체
    */
@@ -67,6 +68,7 @@ public class TokenProvider {
         .setExpiration(accessTokenExpireTime) // 토큰 만료 시간
         .signWith(getSigningKey(), SignatureAlgorithm.HS256) // 사용할 암호화 알고리즘 비밀키
         .compact();
+    log.info("Email stored in accessToken: {}", email);
 
     String refreshToken = Jwts.builder()
         .setSubject("refresh-token")
@@ -91,20 +93,20 @@ public class TokenProvider {
    * @param token 검증할 JWT 토큰
    * @return 토큰의 유효성 검증 결과 (유효할 경우 true, 그렇지 않을 경우 false)
    */
-  public boolean validateToken(String token){
-    try{
+  public boolean validateToken(String token) {
+    try {
       Claims claims = this.parseClaims(token);
       return !claims.getExpiration().before(new Date()); // 토큰의 만료 시간이 현재의 시간보다 이전인지 아닌지 확인
-    }catch (SecurityException | MalformedJwtException e){
+    } catch (SecurityException | MalformedJwtException e) {
       log.error("Invalid Jwt token: {}", e.getMessage());
       throw new GlobalException(INVALID_TOKEN);
-    }catch (ExpiredJwtException e){
+    } catch (ExpiredJwtException e) {
       log.error("Jwt token is expired: {}", e.getMessage());
       throw new GlobalException(EXPIRED_TOKEN);
-    }catch (UnsupportedJwtException e){
+    } catch (UnsupportedJwtException e) {
       log.error("Jwt token is unsupported: {}", e.getMessage());
       throw new GlobalException(UNSUPPORTED_TOKEN);
-    }catch (IllegalArgumentException e){
+    } catch (IllegalArgumentException e) {
       log.error("Jwt token is wrong type: {}", e.getMessage());
       throw new GlobalException(WRONG_TYPE_TOKEN);
     }
@@ -117,11 +119,15 @@ public class TokenProvider {
    * @param token 인증 정보를 추출할 JWT 토큰
    * @return 토큰에 담긴 인증 정보 (Authentication 객체)
    */
-  public Authentication getAuthentication(String token){
+  public Authentication getAuthentication(String token) {
     Claims claims = this.parseClaims(token);
+    log.info("Claims object: {}", claims);
+
     String userId = claims.get(USER_ID).toString();
+    log.info("Extracted userId from token: {}", userId);
 
     JwtUserDetails userDetails = (JwtUserDetails) userDetailService.loadUserByUsername(userId);
+    log.info("UserDetails object: {}", userDetails);
 
     return new UsernamePasswordAuthenticationToken(userDetails, "",
         userDetails.getAuthorities());
@@ -129,9 +135,8 @@ public class TokenProvider {
 
   /**
    * 토큰으로부터 Claim 정보를 가져옴.
-   *
    */
-  private Claims parseClaims(String token){
+  private Claims parseClaims(String token) {
     return Jwts.parserBuilder()
         .setSigningKey(getSigningKey())
         .build()
@@ -143,7 +148,7 @@ public class TokenProvider {
   /**
    * Base64 인코딩된 비밀키를 반환.
    */
-  private Key getSigningKey(){
+  private Key getSigningKey() {
     String encoded = Base64.getEncoder().encodeToString(
         secretKey.getBytes(StandardCharsets.UTF_8));
 
@@ -151,4 +156,12 @@ public class TokenProvider {
 
   }
 
+  /**
+   * 주어진 토큰의 만료 시간을 반환.
+   * @param token 토큰
+   * @return 토큰의 만료 시간
+   */
+  public Long getExpireTime(String token) {
+    return this.parseClaims(token).getExpiration().getTime();
+  }
 }

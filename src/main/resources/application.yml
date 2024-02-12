@@ -15,8 +15,17 @@ spring:
     database: mysql
     defer-datasource-initialization: true
 
-  profiles:
-    active: prod
+  mail:
+      host: smtp.gmail.com
+      port: 587
+      username: naegyu2@gmail.com
+      password: fgyghiqiqtztkfic
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
 
   data:
     redis:

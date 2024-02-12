@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
   "email": "test1234@gmail.com",
-  "password": "12345"
+  "password": "1234512"
 }
 
 ### 이메일 인증
@@ -27,11 +27,28 @@ Content-Type: application/json
 }
 
 ### 이메일 검증
-
 POST http://localhost:8080/api/auth/mail/verify
 Content-Type: application/json
 
 {
   "email": "test1234@gmail.com",
-  "code": "617264"
+  "code": "323742"
+}
+
+### 로그아웃
+POST http://localhost:8080/api/auth/logout
+Content-Type: application/json
+
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzQ5MDg0MywiZXhwIjoxNzA3NDkyNjQzfQ.bD_2irVodHczNUnAnrvB1rlVMobeQ09f-pvvs-7f_ZE"
+}
+
+
+### 토큰 재발급
+POST http://localhost:8080/api/auth/reissue
+Content-Type: application/json
+
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzQ5MDg0MywiZXhwIjoxNzA3NDkyNjQzfQ.bD_2irVodHczNUnAnrvB1rlVMobeQ09f-pvvs-7f_ZE",
+  "refreshToken": "Logout"
 }

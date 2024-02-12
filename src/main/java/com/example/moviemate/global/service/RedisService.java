@@ -54,12 +54,22 @@ public class RedisService {
 
 
   /**
-   * 주어진 key에 대응하는 데이터를 Redis DB에서 삭제.
+   * 주어진 key 에 대응하는 데이터를 Redis DB 에서 삭제.
    *
    * @param key 삭제하고자 하는 데이터의 key
    */
   public void deleteData(String key) {
-    redisTemplate.delete(key);
+    try {
+      Boolean result = redisTemplate.delete(key);
+      if (Boolean.TRUE.equals(result)) {
+        log.info("Successfully deleted key : {}", key);
+      } else {
+        log.warn("Failed to delete key : {}", key);
+      }
+    } catch (Exception e) {
+      log.error("Error occurred while deleting key : {}", key, e);
+    }
   }
+
 
 }

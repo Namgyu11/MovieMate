@@ -103,7 +103,7 @@ public class MailService {
     user.changeEmailAuth();
     userRepository.save(user);
 
-    redisService.deleteData(email);
+    redisService.deleteData(EMAIL_PREFIX + email);
   }
 
   /**
