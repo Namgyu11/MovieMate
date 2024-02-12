@@ -108,7 +108,7 @@ public class AuthServiceImpl implements AuthService {
     Authentication authentication = tokenProvider.getAuthentication(reissueDto.getAccessToken());
 
     // Redis 에서 기존의 액세스 토큰을 삭제.
-    redisService.deleteData(data);
+    redisService.deleteData(REFRESH_TOKEN_PREFIX + reissueDto.getAccessToken());
 
     //인증 정보를 이용해 새로운 토큰을 발행하고, 그 토큰 정보를 담은 TokenDto 객체를 반환
     return generateToken(authentication.getName(), getAuthorities(authentication));
