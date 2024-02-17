@@ -1,0 +1,15 @@
+### 영화 리스트
+GET http://localhost:8080/api/movie/list/movie/기생충
+Content-Type: application/json
+
+### 영화 상세 정보 조회
+GET http://localhost:8080/api/movie/info/movie/20183782
+Content-Type: application/json
+
+### 영화인 리스트
+GET http://localhost:8080/api/movie/list/people/이병헌
+Content-Type: application/json
+
+### 영화인 상세 정보 조회
+GET http://localhost:8080/api/movie/info/people/10055626
+Content-Type: application/json
