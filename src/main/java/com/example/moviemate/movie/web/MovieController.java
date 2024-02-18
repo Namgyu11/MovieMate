@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,8 +32,8 @@ public class MovieController {
    * @param movieNm 영화 이름
    * @return 영화 리스트
    */
-  @GetMapping("/list/movie/{movieNm}")
-  public ResponseEntity<?> getMovieList(@PathVariable String movieNm) throws Exception {
+  @GetMapping("/list/movie")
+  public ResponseEntity<?> getMovieList(@RequestParam("movieNm") String movieNm) throws Exception {
     List<MovieListResponse> movies = movieListService.findMovieByName(movieNm);
 
     return ResponseEntity.ok(movies);
@@ -56,8 +57,8 @@ public class MovieController {
    * @param peopleNm 영화인 이름
    * @return 영화인 리스트
    */
-  @GetMapping("/list/people/{peopleNm}")
-  public ResponseEntity<?> getPeopleList(@PathVariable String peopleNm) throws Exception {
+  @GetMapping("/list/people")
+  public ResponseEntity<?> getPeopleList(@RequestParam("peopleNm") String peopleNm) throws Exception {
 
     List<PeopleListResponse> peoples = peopleListService.findByPeopleName(peopleNm);
 
