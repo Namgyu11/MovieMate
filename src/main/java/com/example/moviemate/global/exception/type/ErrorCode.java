@@ -20,6 +20,9 @@ public enum ErrorCode {
   EMAIL_NOT_VERITY(HttpStatus.BAD_REQUEST, "이메일 인증이 되지 않았습니다."),
   MOVIE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 영화가 없습니다."),
   PEOPLE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 영화인이 없습니다."),
+  ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "이미 등록되어있습니다."),
+  BOOKMARK_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 북마크가 없습니다."),
+
 
   /**
    * 401 Unauthorized

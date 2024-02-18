@@ -53,4 +53,5 @@ public class Movie implements Persistable<String> {
   public void setIsNewStatus(boolean isNew) {
     this.isNew = isNew;
   }
+
 }
