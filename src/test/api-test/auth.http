@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
   "email": "test1234@gmail.com",
-  "password": "1234512"
+  "password": "12345"
 }
 
 ### 이메일 인증
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 {
   "email": "test1234@gmail.com",
-  "code": "323742"
+  "code": "676534"
 }
 
 ### 로그아웃
