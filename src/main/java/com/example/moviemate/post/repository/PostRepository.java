@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>, CustomPostRepository{
 
-  @Query("select p from Post p where p.content like %:content%"
+  @Query("select p from Post p where p.content like concat('%', :content, '%')"
   +"order by p.id desc, p.views desc, p.likeCount desc")
   Page<Post> findAllByContentContaining(String content, Pageable pageable);
 
