@@ -31,6 +31,8 @@ spring:
     redis:
       host: localhost
       port: 6379
+    movie:
+      apiKey: e3f998a70e0c1dfb4b73ddc362cd8d82
 
   jwt:
     header: Authorization

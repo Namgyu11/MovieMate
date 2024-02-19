@@ -57,12 +57,17 @@ public class User extends BaseEntity {
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Post> posts = new ArrayList<>();
+
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Bookmark> bookmarks = new ArrayList<>();
 
   public void changeEmailAuth() {
     this.emailAuth = true;
+  }
+
+  public void addBookmark(Bookmark bookmark) {
+    this.bookmarks.add(bookmark);
   }
 
 

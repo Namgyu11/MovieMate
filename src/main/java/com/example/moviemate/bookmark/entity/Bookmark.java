@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 @Entity
 @Getter
@@ -33,5 +32,13 @@ public class Bookmark extends BaseEntity {
   @JoinColumn(name = "movie_id")
   private Movie movie;
 
+  public void addBookmark(User user) {
+    this.user = user;
+    user.addBookmark(this);
+  }
+
+  public void addMovie(Movie movie) {
+    this.movie = movie;
+  }
 
 }

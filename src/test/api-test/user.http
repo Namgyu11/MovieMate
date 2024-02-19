@@ -1,7 +1,7 @@
 ### 사용자 정보 조회
 GET http://localhost:8080/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwNzQ5MDM1OSwiZXhwIjoxNzA3NDkyMTU5fQ.ASnVOP6IiDI-iZKZmVNos0IDYSRHB_HIocfNYYpiREw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
 
 
 ### 사용자 정보 수정
@@ -14,3 +14,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlc
   "nickname": "abcd12",
   "phoneNumber": "010-1111-5678"
 }
+
+

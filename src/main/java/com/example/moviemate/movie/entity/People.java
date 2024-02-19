@@ -1,9 +1,11 @@
 package com.example.moviemate.movie.entity;
 
-import com.example.moviemate.movie.dto.MovieDto;
+import com.example.moviemate.movie.dto.PeopleDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.Id;
+
 import jakarta.persistence.Transient;
 import lombok.*;
 import org.springframework.data.domain.Persistable;
@@ -14,32 +16,32 @@ import org.springframework.data.domain.Persistable;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Movie implements Persistable<String> {
+public class People implements Persistable<String> {
 
   @Id
   private String id;
 
   @Column(nullable = false)
-  private String movieNm;
+  private String peopleNm;
 
   @Column
-  private String movieNmEn;
+  private String peopleNmEn;
 
   @Column
-  private String openDt;
+  private String repRoleNm;
 
-  @Column
-  private String genre;
-
-  public void updateFromDto(MovieDto movieDto) {
-    this.movieNm = movieDto.getMovieNm();
-    this.movieNmEn = movieDto.getMovieNmEn();
-    this.openDt = movieDto.getOpenDt();
-    this.genre = movieDto.getGenre();
+  @Column(length = 500)
+  private String filmoNames;
+  public void updateFromDto(PeopleDto peopleDto) {
+    this.peopleNm = peopleDto.getPeopleNm();
+    this.peopleNmEn = peopleDto.getPeopleNmEn();
+    this.repRoleNm = peopleDto.getRepRoleNm();
+    this.filmoNames = peopleDto.getFilmoNames();
   }
 
   @Transient
   protected boolean isNew = true;
+
   @Override
   public String getId() {
     return id;
