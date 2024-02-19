@@ -1,4 +1,4 @@
-package com.example.moviemate.post.repository.impl;
+package com.example.moviemate.post.repository;
 
 import com.example.moviemate.post.entity.PostCategory;
 import java.util.Optional;

@@ -9,7 +9,7 @@ import com.example.moviemate.post.dto.PostCategoryResponse;
 import com.example.moviemate.post.dto.PostResponse;
 import com.example.moviemate.post.entity.PostCategory;
 import com.example.moviemate.post.repository.PostRepository;
-import com.example.moviemate.post.repository.impl.PostCategoryRepository;
+import com.example.moviemate.post.repository.PostCategoryRepository;
 import com.example.moviemate.post.service.PostCategoryService;
 import com.example.moviemate.user.entity.User;
 import com.example.moviemate.user.repository.UserRepository;

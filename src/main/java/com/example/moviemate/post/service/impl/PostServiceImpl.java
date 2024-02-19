@@ -13,7 +13,7 @@ import com.example.moviemate.post.dto.PostRequest;
 import com.example.moviemate.post.dto.PostResponse;
 import com.example.moviemate.post.entity.Post;
 import com.example.moviemate.post.repository.PostRepository;
-import com.example.moviemate.post.repository.impl.PostCategoryRepository;
+import com.example.moviemate.post.repository.PostCategoryRepository;
 import com.example.moviemate.post.service.PostService;
 import com.example.moviemate.user.entity.User;
 import com.example.moviemate.user.repository.UserRepository;

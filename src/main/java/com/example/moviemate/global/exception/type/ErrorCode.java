@@ -26,6 +26,8 @@ public enum ErrorCode {
   CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 카테고리가 없습니다."),
   POST_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 글이 없습니다."),
   POST_CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 글 카테고리가 없습니다."),
+  ALREADY_LIKED(HttpStatus.BAD_REQUEST, "이미 좋아요를 누른 글입니다."),
+  ALREADY_UNLIKED(HttpStatus.BAD_REQUEST, "이미 좋아요를 취소한 글입니다."),
 
 
   /**
