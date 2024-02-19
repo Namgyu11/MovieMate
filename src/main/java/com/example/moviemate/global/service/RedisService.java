@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.common.util.StringUtils;
 import java.time.Duration;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -99,6 +100,19 @@ public class RedisService {
       log.error("Error occurred while deleting key : {}", key, e);
     }
   }
+
+  public void increaseHashData(String hashKey, String key) {
+    redisTemplate.opsForHash().increment(hashKey, key, 1);
+  }
+
+  public Map<Object, Object> hasHashKeys(String key) {
+    return redisTemplate.opsForHash().entries(key);
+  }
+
+  public void deleteHashKey(String hashKey, String key) {
+    redisTemplate.opsForHash().delete(hashKey, key);
+  }
+
 
 
 }
