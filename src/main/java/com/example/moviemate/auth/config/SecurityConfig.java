@@ -1,9 +1,14 @@
 package com.example.moviemate.auth.config;
 
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 import com.example.moviemate.global.util.jwt.JwtAccessDeniedHandler;
 import com.example.moviemate.global.util.jwt.JwtAuthenticationEntryPoint;
 import com.example.moviemate.global.util.jwt.JwtAuthenticationFilter;
-import com.example.moviemate.user.entity.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -41,12 +47,10 @@ public class SecurityConfig {
         )
         .authorizeHttpRequests(
             auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/movie/**").permitAll()
-                .requestMatchers("/api/user/").hasRole("USER")
-                .requestMatchers("/api/admin/").hasRole("ADMIN")
+                .requestMatchers(requestHasRoleUser()).hasRole("USER")
+                .requestMatchers(requestHasRoleAdmin()).hasRole("ADMIN")
+                .requestMatchers(requestHasAnyRoleUserAdmin()).hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll()
-
         ).exceptionHandling(configurer -> {
           configurer.authenticationEntryPoint(jwtAuthenticationEntryPoint);
           configurer.accessDeniedHandler(jwtAccessDeniedHandler);
@@ -54,5 +58,35 @@ public class SecurityConfig {
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return httpSecurity.build();
+  }
+
+  private RequestMatcher[] requestHasRoleUser() {
+    List<RequestMatcher> requestMatchers = List.of(
+        antMatcher("/api/user"),
+        antMatcher(POST, "/api/post"),
+        antMatcher(PUT, "/api/post"),
+        antMatcher(DELETE, "/api/post"),
+        antMatcher(POST, "/api/post/like"),
+        antMatcher(POST, "/api/post/unlike"),
+        antMatcher(POST, "/api/comment"),
+        antMatcher(PUT, "/api/comment")
+    );
+    return requestMatchers.toArray(RequestMatcher[]::new);
+  }
+
+  private RequestMatcher[] requestHasRoleAdmin() {
+    List<RequestMatcher> requestMatchers = List.of(
+        antMatcher(POST,"/api/post/category"),
+        antMatcher(PUT,"/api/post/category")
+    );
+
+    return requestMatchers.toArray(RequestMatcher[]::new);
+  }
+
+  private RequestMatcher[] requestHasAnyRoleUserAdmin() {
+    List<RequestMatcher> requestMatchers = List.of(
+        antMatcher(DELETE, "/api/comment")
+    );
+    return requestMatchers.toArray(RequestMatcher[]::new);
   }
 }
