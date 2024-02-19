@@ -3,6 +3,7 @@ package com.example.moviemate.user.entity;
 import com.example.moviemate.bookmark.entity.Bookmark;
 import com.example.moviemate.global.entity.BaseEntity;
 import com.example.moviemate.post.entity.Post;
+import com.example.moviemate.post.entity.PostLike;
 import com.example.moviemate.user.entity.type.UserType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -60,6 +61,10 @@ public class User extends BaseEntity {
 
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<PostLike> postLikes = new ArrayList<>();
+
+  @Builder.Default
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Bookmark> bookmarks = new ArrayList<>();
 
   public void changeEmailAuth() {
@@ -69,6 +74,22 @@ public class User extends BaseEntity {
   public void addBookmark(Bookmark bookmark) {
     this.bookmarks.add(bookmark);
   }
+
+  public void addPost(Post post){
+    this.posts.add(post);
+    post.setUser(this);
+  }
+  public void removePost(Post post){
+    this.posts.remove(post);
+    post.setUser(null);
+  }
+
+
+  public void addPostLike(PostLike postLike){
+    this.postLikes.add(postLike);
+  }
+
+
 
 
 }

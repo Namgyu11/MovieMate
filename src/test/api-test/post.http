@@ -1,0 +1,78 @@
+### 게시글 생성
+POST http://localhost:8080/api/post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+{
+  "title": "제목a",
+  "content": "내용b",
+  "category": "카테고리c"
+}
+
+### 게시글 수정
+PUT http://localhost:8080/api/post/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+{
+  "title": "제목 aaa",
+  "content": "내용 bbb"
+}
+
+### 게시글 삭제
+DELETE http://localhost:8080/api/post/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+### 게시글 리스트 조회
+GET http://localhost:8080/api/post/searchAll
+Content-Type: application/json
+
+### 게시글 조회
+GET http://localhost:8080/api/post/detail/2
+Content-Type: application/json
+
+### 게시글 단건 검색
+GET http://localhost:8080/api/post/search/2
+Content-Type: application/json
+
+### 게시글 조회 (제목)
+GET http://localhost:8080/api/post/search/title?id=0&name=제목
+Content-Type: application/json
+
+### 게시글 조회 (내용)
+GET http://localhost:8080/api/post/search/content?name=내용
+Content-Type: application/json
+
+### 게시글 좋아요
+POST http://localhost:8080/api/post/like?id=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+### 게시글 좋아요 취소
+POST http://localhost:8080/api/post/unlike?id=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+### 게시글 카테고리 생성
+POST http://localhost:8080/api/post/category
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+{
+  "name": "카테고리"
+}
+
+
+### 게시글 카테고리 이름 변경
+PUT http://localhost:8080/api/post/category?id=2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhY2Nlc3MtdG9rZW4iLCJyb2xlcyI6IlJPTEVfVVNFUiIsInVzZXJJZCI6InRlc3QxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTcwODI3NTk4MiwiZXhwIjoxNzA4Mjc3NzgyfQ.97MzMO-ECRmfHeSHyhBKbMPB_bDQe15wJIkjXf2U7so
+
+{
+  "name": "카테고리123"
+}
+
+### 게시글 카테고리 검색
+GET http://localhost:8080/api/post/category?id=1
+Content-Type: application/json

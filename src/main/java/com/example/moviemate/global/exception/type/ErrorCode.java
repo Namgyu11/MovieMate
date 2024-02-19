@@ -22,6 +22,12 @@ public enum ErrorCode {
   PEOPLE_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 영화인이 없습니다."),
   ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "이미 등록되어있습니다."),
   BOOKMARK_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 북마크가 없습니다."),
+  WRITE_NOT_YOURSELF(HttpStatus.BAD_REQUEST, "본인이 작성한 글만 수정, 삭제가 가능합니다."),
+  CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 카테고리가 없습니다."),
+  POST_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 글이 없습니다."),
+  POST_CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST, "해당하는 글 카테고리가 없습니다."),
+  ALREADY_LIKED(HttpStatus.BAD_REQUEST, "이미 좋아요를 누른 글입니다."),
+  ALREADY_UNLIKED(HttpStatus.BAD_REQUEST, "이미 좋아요를 취소한 글입니다."),
 
 
   /**
