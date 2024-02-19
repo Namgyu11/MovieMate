@@ -18,6 +18,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
 
   private final JPAQueryFactory jpa;
   private final EntityManager entityManager;
+
   @Override
   public Slice<Post> searchByTitle(Long postId, String title, Pageable pageable) {
     List<Post> postList = jpa.selectFrom(post)
@@ -38,11 +39,16 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
 
   @Override
   public void updateViews(Long id, int views) {
-
+    jpa.update(post)
+        .set(post.views, post.views.add(views))
+        .where(post.id.eq(id))
+        .execute();
+    entityManager.flush();
+    entityManager.clear();
   }
 
   private BooleanExpression ltPostId(Long postId) {
-    if(postId == null || postId == 0L) {
+    if (postId == null || postId == 0L) {
       return null;
     }
 
@@ -50,11 +56,11 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
   }
 
 
-  private Slice<Post> checkLastPage(Pageable pageable, List<Post> results){
+  private Slice<Post> checkLastPage(Pageable pageable, List<Post> results) {
 
     boolean hasNext = false;
 
-    if(results.size() > pageable.getPageSize()){
+    if (results.size() > pageable.getPageSize()) {
       hasNext = true;
       results.remove(pageable.getPageSize());
     }
