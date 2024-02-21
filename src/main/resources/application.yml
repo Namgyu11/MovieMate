@@ -1,15 +1,10 @@
 spring:
 
-#  datasource:
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mariadb://localhost:33062/movieMate?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-#    username: root
-#    password: s5554549
   datasource:
-      driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://svc.sel5.cloudtype.app:$31509/movieMate?characterEncoding=UTF-8&serverTimezone=UTC
-      username: root
-      password: s5554549
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/movieMate?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: s5554549
 
   jpa:
     hibernate:
@@ -70,6 +65,3 @@ cloud:
       auto: false
     stack:
       auto: false
-
-server:
-  port: 8081
