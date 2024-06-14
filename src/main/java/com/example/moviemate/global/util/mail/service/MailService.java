@@ -10,10 +10,13 @@ import com.example.moviemate.user.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,15 +40,17 @@ public class MailService {
    * @param email 인증 코드를 전송할 이메일 주소
    * @return 인증 코드와 이메일 주소를 포함한 SendMailResponse 객체
    */
-  public SendMailResponse generateAndDispatchAuthCode(String email) {
-    String code = createRandomCode();
-    sendAuthMail(email, code);
-    redisService.setDataExpire(EMAIL_PREFIX + email, code, EMAIL_TOKEN_EXPIRATION);
-
-    return SendMailResponse.builder()
-        .email(email)
-        .code(code)
-        .build();
+  @Async("mailExecutor")
+  public CompletableFuture<SendMailResponse> generateAndDispatchAuthCode(String email) {
+    return CompletableFuture.supplyAsync(this::createRandomCode)
+        .thenApply(code -> {
+          sendAuthMail(email, code);
+          return code;
+        })
+        .thenApply(code -> {
+          redisService.setDataExpire(EMAIL_PREFIX + email, code, EMAIL_TOKEN_EXPIRATION);
+          return new SendMailResponse(email, code);
+        });
   }
 
   /**

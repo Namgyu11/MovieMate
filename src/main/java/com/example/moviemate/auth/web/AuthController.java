@@ -6,9 +6,11 @@ import com.example.moviemate.auth.dto.SignInDto;
 import com.example.moviemate.auth.dto.SignUpDto;
 import com.example.moviemate.auth.service.AuthService;
 import com.example.moviemate.global.util.mail.dto.SendMailRequest;
+import com.example.moviemate.global.util.mail.dto.SendMailResponse;
 import com.example.moviemate.global.util.mail.dto.VerifyMailRequest;
 import com.example.moviemate.global.util.mail.service.MailService;
 import jakarta.validation.Valid;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +48,10 @@ public class AuthController {
   }
   @PostMapping("/mail/certification")
   public ResponseEntity<?> sendCertificationMail(@RequestBody SendMailRequest request){
+   SendMailResponse mail = mailService.generateAndDispatchAuthCode(
+        request.getEmail()).join();
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(mailService.generateAndDispatchAuthCode(request.getEmail()));
+        .body(mail);
   }
   @PostMapping("/mail/verify")
   public ResponseEntity<?> sendVerifyMail(@RequestBody VerifyMailRequest request){

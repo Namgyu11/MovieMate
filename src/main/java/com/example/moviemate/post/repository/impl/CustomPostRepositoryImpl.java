@@ -21,7 +21,8 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
 
   @Override
   public Slice<Post> searchByTitle(Long postId, String title, Pageable pageable) {
-    List<Post> postList = jpa.selectFrom(post)
+    List<Post> postList = jpa
+        .selectFrom(post)
         .where(
             ltPostId(postId)
             , post.title.contains(title)

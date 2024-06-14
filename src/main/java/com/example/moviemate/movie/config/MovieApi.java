@@ -26,5 +26,7 @@ public interface MovieApi {
   @GetExchange("/people/searchPeopleInfo.json")
   PeopleDetailInfoApiResponse getApiSearchPeopleInfoById(@RequestParam("key") String key,
       @RequestParam("peopleCd")  String peopleCd);
+
+
 }
 

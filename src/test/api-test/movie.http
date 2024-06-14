@@ -3,7 +3,7 @@ GET http://localhost:8080/api/movie/list/movie?movieNm=기생충
 Content-Type: application/json
 
 ### 영화 상세 정보 조회
-GET http://localhost:8080/api/movie/info/movie/20183782
+GET http://localhost:8080/api/movie/info/movie/20050333
 Content-Type: application/json
 
 ### 영화인 리스트

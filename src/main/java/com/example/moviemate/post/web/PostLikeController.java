@@ -3,6 +3,7 @@ package com.example.moviemate.post.web;
 
 import com.example.moviemate.auth.config.LoginUser;
 import com.example.moviemate.post.service.PostLikeService;
+import com.example.moviemate.post.service.impl.PostLikeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostLikeController {
 
   private final PostLikeService postLikeService;
+
 
   @PostMapping("/like")
   public ResponseEntity<?> likePost(@RequestParam("id") Long postId, @LoginUser String username) {

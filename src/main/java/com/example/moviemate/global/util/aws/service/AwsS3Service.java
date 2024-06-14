@@ -36,7 +36,8 @@ public class AwsS3Service {
     String fileName = generateFileName(multipartFile);
 
     try (InputStream inputStream = multipartFile.getInputStream()) {
-      amazonS3.putObject(new PutObjectRequest(bucketName, fileName, inputStream, getObjectMetadata(multipartFile))
+      amazonS3.putObject(new PutObjectRequest(bucketName, fileName, inputStream,
+          getObjectMetadata(multipartFile))
           .withCannedAcl(CannedAccessControlList.PublicRead));
     } catch (IOException e) {
       log.error("IOException is occurred", e);
